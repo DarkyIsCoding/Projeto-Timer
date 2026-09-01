@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="Cronometro.css" type="text/css"/>
+        <title> Clockwatch. </title>
+    </head>
+
+<audio id="sound" src="alarm.mp3" style="display: none;"></audio>
+
+<div class="container">
+<h2>minutos</h2>
+<select id="Minutos" name="Minutos"></select>
+
+<h2>segundos</h2>
+<select id="segundos" name="segundos"></select>
+<br />
+<button id="start">Iniciar contagem</button>
+
+<!-- adicionado id="display" -->
+<div id="display" class="display">
+<h3>00:00:00</h3>
+</div>
+</div>
+
+<script>
+// g minúsculo
+var display = document.getElementById('display');
+
+var minutos = document.getElementById('minutos');
+var segundos = document.getElementById('segundos');
+var Start = document.getElementById('start'); // mesmo id do botão
+
+var cronometroSeg;
+var Segatual;
+var Minatual;
+var interval;
+
+// removido ; depois do for
+for (var i = 0; i <= 60; i++) {
+Minutos.innerHTML += '<option value="' + i + '">' + i + '</option>';
+}
+for (var i = 1; i <= 60; i++) {
+segundos.innerHTML += '<option value="' + i + '">' + i + '</option>';
+}
+
+Start.addEventListener('click', function(){
+    Minatual = Minutos.value;
+    Segatual = segundos.value;
+
+
+    display.childNodes[1].innerHTML = Minatual + ":" +Segatual;
+
+    interval = setInterval (function(){
+
+    Segatual--;
+    if(Segatual <= 0){
+    if(Minatual > 0){
+        Minatual--
+        Segatual = 59;
+    }else{
+        alert('Acabou!');
+        document.getElementById(sound).play();
+        clearInterval(interval);
+    }
+    }
+
+    display.childNodes[1].innerHTML = Minatual + ":" + Segatual;
+
+},1000);
+
+
+
+})
+
+
+
+</script>
+</html>
